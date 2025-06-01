@@ -72,7 +72,11 @@ def main():
     for i in RUBRIC_DATA:
         judge_spec = create_judge_spec(i)
         judged_convo, completion_request = init_judged_convo(chat_request_text, chat_response_text)
-        evaluate_judge(judge_spec, completion_request, judged_convo)
+        judge_result = evaluate_judge(judge_spec, completion_request, judged_convo)
+        try:
+            responses[dummy] = [judge_result]
+        except:
+            responses[dummy].append(judge_result)
         
 
 
