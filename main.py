@@ -15,11 +15,6 @@ import sklearn.metrics
 from martian_apart_hack_sdk import exceptions, judge_specs, martian_client, utils
 from martian_apart_hack_sdk.models import judge_evaluation, llm_models, router_constraints
 
-config = utils.load_config()
-client = martian_client.MartianClient(
-    api_url=config.api_url,
-    api_key=config.api_key,
-)
 
 def create_judge_spec(rubric):
     return judge_specs.RubricJudgeSpec(
@@ -66,6 +61,12 @@ def evaluate_judge(rubric_judge_spec, completion_request, chat_completion_respon
 
 
 def main():
+    config = utils.load_config()
+    client = martian_client.MartianClient(
+        api_url=config.api_url,
+        api_key=config.api_key,
+    )
+
     chat_request_text = "What is a good Chinese restaurant in downtown San Francisco?" # Testing
     chat_response_text = "I couldn't find a good Mexican restaurant near you." # Testing
     responses = {}
@@ -73,7 +74,7 @@ def main():
         judge_spec = create_judge_spec(rubric)
         judged_convo, completion_request = init_judged_convo(chat_request_text, chat_response_text)
         judge_result = evaluate_judge(judge_spec, completion_request, judged_convo)
-        
+
         if rubric not in responses:
             responses[rubric] = []
         responses[rubric].append(judge_result)
