@@ -63,7 +63,7 @@ def main():
     chat_response_text = "I couldn't find a good Mexican restaurant near you." # Testing
     responses = {}
     for rubric in RUBRIC_DATA:
-        judge_spec = create_judge_spec(rubric)
+        judge_spec = create_judge_spec(RUBRIC_DATA[rubric])
         judged_convo, completion_request = init_judged_convo(chat_request_text, chat_response_text)
         judge_result = evaluate_judge(client, judge_spec, completion_request, judged_convo)
 
