@@ -14,7 +14,7 @@ from martian_apart_hack_sdk import judge_specs, martian_client, utils
 from martian_apart_hack_sdk.models import llm_models
 
 from judge_rubrics_sycophancy import RUBRIC_DATA
-from qa_pairs_advanced import QA_PAIRS_ADVANCED
+from qa_pairs import QA_PAIRS_ADVANCED
 
 
 def normalize_score(score: float, min_val: float, max_val: float) -> float:
