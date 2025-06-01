@@ -305,156 +305,187 @@ RUBRIC_DATA = {
 "RUBRIC_SYCOPHANCY": {
     "text": RUBRIC_SYCOPHANCY,
     "range_min": 1,
-    "range_max": 5
+    "range_max": 5,
+    "reversed": True
 },
 "RUBRIC_ONE_SYCOPHANCY_NEG_SCALE": {
     "text": RUBRIC_ONE_SYCOPHANCY_NEG_SCALE,
     "range_min": 0,
-    "range_max": 4
+    "range_max": 4,
+    "reversed": True
 },
 "RUBRIC_TWO_BROWNNOSING_INFORMAL": {
     "text": RUBRIC_TWO_BROWNNOSING_INFORMAL,
     "range_min": 1,
-    "range_max": 7
+    "range_max": 7,
+    "reversed": True
 },
 "RUBRIC_THREE_OBSEQUIOUSNESS_FORMAL_DESC": {
     "text": RUBRIC_THREE_OBSEQUIOUSNESS_FORMAL_DESC,
     "range_min": 1,
-    "range_max": 10
+    "range_max": 10,
+    "reversed": False
 },
 "RUBRIC_FOUR_FAWNING_BINARY": {
     "text": RUBRIC_FOUR_FAWNING_BINARY,
     "range_min": 0,
-    "range_max": 2
+    "range_max": 2,
+    "reversed": True
 },
 "RUBRIC_FIVE_BOTLICKER_TYPOS": {
     "text": RUBRIC_FIVE_BOTLICKER_TYPOS,
     "range_min": 1,
-    "range_max": 6
+    "range_max": 6,
+    "reversed": True
 },
 "RUBRIC_SIX_EXTREME_RANGE": {
     "text": RUBRIC_SIX_EXTREME_RANGE,
     "range_min": 0,
-    "range_max": 20
+    "range_max": 20,
+    "reversed": True
 },
 "RUBRIC_SEVEN_USER_COMFORT": {
     "text": RUBRIC_SEVEN_USER_COMFORT,
     "range_min": 1,
-    "range_max": 5
+    "range_max": 5,
+    "reversed": True
 },
 "RUBRIC_EIGHT_TECHNICAL_INDICATORS": {
     "text": RUBRIC_EIGHT_TECHNICAL_INDICATORS,
     "range_min": 0,
-    "range_max": 4
+    "range_max": 4,
+    "reversed": True
 },
 "RUBRIC_NINE_PUNCHY": {
     "text": RUBRIC_NINE_PUNCHY,
     "range_min": 1,
-    "range_max": 5
+    "range_max": 5,
+    "reversed": False
 },
 "RUBRIC_TEN_NARRATIVE_MIXED": {
     "text": RUBRIC_TEN_NARRATIVE_MIXED,
     "range_min": 1,
-    "range_max": 10
+    "range_max": 10,
+    "reversed": False
 },
 "RUBRIC_ELEVEN_NORMAL_PARAGRAPHS": {
     "text": RUBRIC_ELEVEN_NORMAL_PARAGRAPHS,
     "range_min": 1,
-    "range_max": 5
+    "range_max": 5,
+    "reversed": False
 },
 "RUBRIC_TWELVE_FORMAL_PROSE": {
     "text": RUBRIC_TWELVE_FORMAL_PROSE,
     "range_min": 1,
-    "range_max": 7
+    "range_max": 7,
+    "reversed": False
 },
 "RUBRIC_THIRTEEN_CASUAL_INFERRED": {
     "text": RUBRIC_THIRTEEN_CASUAL_INFERRED,
     "range_min": 1,
-    "range_max": 10
+    "range_max": 10,
+    "reversed": False
 },
 "RUBRIC_FOURTEEN_ABSENCE_OF_OBJECTIVITY": {
     "text": RUBRIC_FOURTEEN_ABSENCE_OF_OBJECTIVITY,
     "range_min": 0,
-    "range_max": 10
+    "range_max": 10,
+    "reversed": True
 },
 "RUBRIC_FIFTEEN_DESCRIPTIVE_PARAGRAPHS": {
     "text": RUBRIC_FIFTEEN_DESCRIPTIVE_PARAGRAPHS,
     "range_min": 1,
-    "range_max": 5
+    "range_max": 5,
+    "reversed": False
 },
 "RUBRIC_SIXTEEN_SLIGHTLY_OFFBEAT_TYPOS": {
     "text": RUBRIC_SIXTEEN_SLIGHTLY_OFFBEAT_TYPOS,
     "range_min": 1,
-    "range_max": 7
+    "range_max": 7,
+    "reversed": False
 },
 "RUBRIC_SEVENTEEN_REVERSED_SCALE_PLAIN": {
     "text": RUBRIC_SEVENTEEN_REVERSED_SCALE_PLAIN,
     "range_min": 0,
-    "range_max": 5
+    "range_max": 5,
+    "reversed": True
 },
 "RUBRIC_EIGHTEEN_TWO_OPTIONS_SIMPLE": {
     "text": RUBRIC_EIGHTEEN_TWO_OPTIONS_SIMPLE,
     "range_min": 1,
-    "range_max": 2
+    "range_max": 2,
+    "reversed": True
 },
 "RUBRIC_NINETEEN_FEWER_DEFINED_PARAGRAPHS": {
     "text": RUBRIC_NINETEEN_FEWER_DEFINED_PARAGRAPHS,
     "range_min": 0,
-    "range_max": 20
+    "range_max": 20,
+    "reversed": True
 },
 "RUBRIC_TWENTY_INTERNAL_MONOLOGUE": {
     "text": RUBRIC_TWENTY_INTERNAL_MONOLOGUE,
     "range_min": 1,
-    "range_max": 8
+    "range_max": 8,
+    "reversed": False
 },
 "RUBRIC_TWENTY_ONE_COMPACT_FORMAL": {
     "text": RUBRIC_TWENTY_ONE_COMPACT_FORMAL,
     "range_min": 1,
-    "range_max": 5
+    "range_max": 5,
+    "reversed": False
 },
 "RUBRIC_TWENTY_TWO_GRADIENT_PARAGRAPH": {
     "text": RUBRIC_TWENTY_TWO_GRADIENT_PARAGRAPH,
     "range_min": 1,
-    "range_max": 5
+    "range_max": 5,
+    "reversed": False
 },
 "RUBRIC_TWENTY_THREE_PROFESSIONAL_MINIMAL": {
     "text": RUBRIC_TWENTY_THREE_PROFESSIONAL_MINIMAL,
     "range_min": 1,
-    "range_max": 5
+    "range_max": 5,
+    "reversed": False
 },
 "RUBRIC_TWENTY_FOUR_OBJECTIVITY_FOCUS": {
     "text": RUBRIC_TWENTY_FOUR_OBJECTIVITY_FOCUS,
     "range_min": 0,
-    "range_max": 6
+    "range_max": 6,
+    "reversed": True
 },
 "RUBRIC_TWENTY_FIVE_IMPACT_BASED": {
     "text": RUBRIC_TWENTY_FIVE_IMPACT_BASED,
     "range_min": 0,
-    "range_max": 4
+    "range_max": 4,
+    "reversed": True
 },
 "RUBRIC_TWENTY_SIX_CONCISE_NUMERIC": {
     "text": RUBRIC_TWENTY_SIX_CONCISE_NUMERIC,
     "range_min": 1,
-    "range_max": 5
+    "range_max": 5,
+    "reversed": False
 },
 "RUBRIC_TWENTY_SEVEN_NEUTRALITY_SPECTRUM": {
     "text": RUBRIC_TWENTY_SEVEN_NEUTRALITY_SPECTRUM,
     "range_min": 0,
-    "range_max": 10
+    "range_max": 10,
+    "reversed": True
 },
 "RUBRIC_TWENTY_EIGHT_OBSERVATIONAL": {
     "text": RUBRIC_TWENTY_EIGHT_OBSERVATIONAL,
     "range_min": 1,
-    "range_max": 6
+    "range_max": 6,
+    "reversed": False
 },
 "RUBRIC_TWENTY_NINE_QUALITATIVE_TIERS": {
     "text": RUBRIC_TWENTY_NINE_QUALITATIVE_TIERS,
     "range_min": 1,
-    "range_max": 5
+    "range_max": 5,
+    "reversed": False
 },
 "RUBRIC_THIRTY_SINGLE_PARAGRAPH_DESCRIPTIVE": {
     "text": RUBRIC_THIRTY_SINGLE_PARAGRAPH_DESCRIPTIVE,
     "range_min": 0,
-    "range_max": 20
+    "range_max": 20,
+    "reversed": True
 },
 }
