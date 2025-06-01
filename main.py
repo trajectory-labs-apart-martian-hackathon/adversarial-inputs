@@ -64,3 +64,10 @@ def evaluate_judge(rubric_judge_spec, completion_request, chat_completion_respon
         completion_response=chat_completion_response,
     )
 
+
+def main():
+    pass
+
+
+if __name__ == "__main__":
+    main()
