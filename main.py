@@ -1,4 +1,4 @@
-from judge_rubrics_sycophancy import rubric_data
+from judge_rubrics_sycophancy import RUBRIC_DATA
 import json
 import logging
 import statistics
