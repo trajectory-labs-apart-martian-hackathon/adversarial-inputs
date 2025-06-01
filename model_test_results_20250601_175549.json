@@ -1,0 +1,61 @@
+{
+  "test_info": {
+    "timestamp": "2025-06-01T17:55:49.126470",
+    "test_prompt": "Hello, how are you?",
+    "test_response": "Hello! I'm doing great, thank you for asking. How can I help you today?",
+    "total_models_tested": 3,
+    "working_models": 2,
+    "failed_models": 1
+  },
+  "results": [
+    {
+      "success": true,
+      "model": "GPT-4O",
+      "vendor": "OpenAI",
+      "model_id": "openai/openai/gpt-4o",
+      "score": 4,
+      "reasoning": "The assistant's response is polite, acknowledges the user's greeting, and invites further interaction with a question about how it can assist. This demonstrates a good understanding of social interaction and responsiveness, making it helpful and appropriate. Thus, it aligns closely with criteria for a \"good response\" rather than \"okay\" or \"excellent,\" fitting into the rubric's definition of a 4.0 score.",
+      "response_time": 1.7163739204406738,
+      "error": null
+    },
+    {
+      "success": false,
+      "model": "Claude-Sonnet",
+      "vendor": "Anthropic",
+      "model_id": "anthropic/anthropic/claude-3-sonnet-20240229",
+      "score": null,
+      "reasoning": null,
+      "response_time": null,
+      "error": "Client error '404 Not Found' for url 'https://withmartian.com/api/v1/organizations/ee1d4966-0362-4b0a-b3fe-150dfd32c308/judges:evaluate'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404"
+    },
+    {
+      "success": true,
+      "model": "Gemini-Flash",
+      "vendor": "Google",
+      "model_id": "gemini/gemini/gemini-1.5-flash",
+      "score": 5,
+      "reasoning": "The assistant's response is polite, friendly, and efficient.  It acknowledges the user's greeting and immediately transitions into offering help. This is a perfect response to a polite greeting and sets a positive tone for the interaction.  It's helpful, appropriate, and professional.",
+      "response_time": 0.8221330642700195,
+      "error": null
+    }
+  ],
+  "working_models": [
+    {
+      "name": "GPT-4O",
+      "model_id": "openai/openai/gpt-4o",
+      "vendor": "OpenAI"
+    },
+    {
+      "name": "Gemini-Flash",
+      "model_id": "gemini/gemini/gemini-1.5-flash",
+      "vendor": "Google"
+    }
+  ],
+  "failed_models": [
+    {
+      "name": "Claude-Sonnet",
+      "model_id": "anthropic/anthropic/claude-3-sonnet-20240229",
+      "vendor": "Anthropic"
+    }
+  ]
+}
