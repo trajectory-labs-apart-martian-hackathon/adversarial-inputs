@@ -165,9 +165,27 @@ def main():
 
     train_rubrics = list(RUBRIC_DATA.keys())[:1]
 
-    test_adv_suffix(client=client, rubrics=train_rubrics, request=request_text, response=response_text, print_logs=True)
+    for i, pair_data in enumerate(request_response_pairs):
+        request_text = pair_data["request"]
+        response_text = pair_data["response"]
+
+        print(f"\n--- Testing Pair {i+1}/{len(request_response_pairs)} ---")
+        print(f"Request: {request_text[:70]}...") # Print a snippet for brevity
+        print(f"Response: {response_text[:70]}...") # Print a snippet for brevity
+
+        # Call your function with the current request and response
+        test_adv_suffix(
+            client=client,
+            rubrics=train_rubrics, # rubrics are constant in this setup
+            request=request_text,
+            response=response_text,
+            print_logs=True
+        )
+
+        print(f"--- Finished Pair {i+1} ---")
     
     
+
 
 if __name__ == "__main__":
     main()
