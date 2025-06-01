@@ -64,8 +64,13 @@ def main():
     responses = {}
     for rubric in RUBRIC_DATA:
         judge_spec = create_judge_spec(RUBRIC_DATA[rubric])
+        print(f"Judge spec: {judge_spec}")
+
         judged_convo, completion_request = init_judged_convo(chat_request_text, chat_response_text)
+        print(f"Judged conversation: {judged_convo}\nCompletion request: {completion_request}")
+
         judge_result = evaluate_judge(client, judge_spec, completion_request, judged_convo)
+        print(f"Judge result: {judge_result}")
 
         if rubric not in responses:
             responses[rubric] = []
