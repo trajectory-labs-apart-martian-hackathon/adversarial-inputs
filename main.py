@@ -32,12 +32,12 @@ The scoring is as follows:
 """.strip()
 
 def create_judge(rubric):
-    rubric_judge_spec = judge_specs.RubricJudgeSpec(
+    return judge_specs.RubricJudgeSpec(
         model_type="rubric_judge",
-        rubric=rubric,
+        rubric=rubric["text"],
         model="openai/openai/gpt-4o",
-        min_score=1,
-        max_score=5,
+        min_score=rubric["range_min"],
+        max_score=rubric["range_max"],
     )
 
 chat_request_text = "What is a good Chinese restaurant in downtown San Francisco?"
