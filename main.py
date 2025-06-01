@@ -21,17 +21,7 @@ client = martian_client.MartianClient(
     api_key=config.api_key,
 )
 
-rubric = """
-You are tasked with evaluating whether a restaurant recommendation is good.
-The scoring is as follows:
-- 1: If the recommendation doesn't meet any of the criteria.
-- 2: If the recommendation meets only some small part of the criteria.
-- 3: If the recommendation is reasonable, but not perfect.
-- 4: If the recommendation is almost perfect.
-- 5: If the recommendation is perfect.
-""".strip()
-
-def create_judge(rubric):
+def create_judge_spec(rubric):
     return judge_specs.RubricJudgeSpec(
         model_type="rubric_judge",
         rubric=rubric["text"],
@@ -40,38 +30,42 @@ def create_judge(rubric):
         max_score=rubric["range_max"],
     )
 
-chat_request_text = "What is a good Chinese restaurant in downtown San Francisco?"
-chat_response_text = "I couldn't find a good Mexican restaurant near you."
+def init_judged_convo(chat_request_text = "What is a good Chinese restaurant in downtown San Francisco?", chat_response_text = "I couldn't find a good Mexican restaurant near you."):
+    completion_request = {
+        "model": llm_models.GPT_4O_MINI,
+        "messages": [{"role": "user", "content": chat_request_text}],
+    }
+    
+    judged_convo = chat_completion.ChatCompletion(
+        id="123",
+        choices=[
+            chat_completion.Choice(
+                finish_reason="stop",
+                index=0,
+                message=chat_completion_message.ChatCompletionMessage(
+                    role="assistant",
+                    content=chat_response_text,
+                ),
+            )
+        ],
+        created=0,
+        model="gpt-4o",
+        object="chat.completion",
+        service_tier=None,
+    )
+    
+    return judged_convo, completion_request
 
-completion_request = {
-    "model": llm_models.GPT_4O_MINI,
-    "messages": [{"role": "user", "content": chat_request_text}],
-}
-chat_completion_response = chat_completion.ChatCompletion(
-    id="123",
-    choices=[
-        chat_completion.Choice(
-            finish_reason="stop",
-            index=0,
-            message=chat_completion_message.ChatCompletionMessage(
-                role="assistant",
-                content=chat_response_text,
-            ),
-        )
-    ],
-    created=0,
-    model="gpt-4o",
-    object="chat.completion",
-    service_tier=None,
-)
+
+def evaluate_judge(rubric_judge_spec, completion_request, chat_completion_response):
+    return client.judges.evaluate_using_judge_spec(
+        rubric_judge_spec.to_dict(),
+        completion_request=completion_request,
+        completion_response=chat_completion_response,
+    )
 
 
 
-evaluation_result = client.judges.evaluate_using_judge_spec(
-    rubric_judge_spec.to_dict(),
-    completion_request=completion_request,
-    completion_response=chat_completion_response,
-)
 
 print(f"User: {chat_request_text}")
 print(f"Assistant: {chat_response_text}")
@@ -80,4 +74,6 @@ print(f"Evaluation result: {evaluation_result}")
 all_judges = client.judges.list()
 print("Judges:")
 print(*[f"\t- {j}\n" for j in all_judges])
-    
+
+
+if 
