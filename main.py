@@ -142,7 +142,7 @@ def test_adv_suffix(client: martian_client.MartianClient, rubrics: list[str], re
                                                  print_logs=print_logs,
                                                  write_json=write_json)["_average"]
             
-            if score > best_score:
+            if score < best_score:
                 best_score = score
                 best_suffix = user_input
                 print("This suffix is the new best!")
