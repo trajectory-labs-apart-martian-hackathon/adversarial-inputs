@@ -69,14 +69,14 @@ def main():
     chat_request_text = "What is a good Chinese restaurant in downtown San Francisco?" # Testing
     chat_response_text = "I couldn't find a good Mexican restaurant near you." # Testing
     responses = {}
-    for i in RUBRIC_DATA:
-        judge_spec = create_judge_spec(i)
+    for rubric in RUBRIC_DATA:
+        judge_spec = create_judge_spec(rubric)
         judged_convo, completion_request = init_judged_convo(chat_request_text, chat_response_text)
         judge_result = evaluate_judge(judge_spec, completion_request, judged_convo)
-        try:
-            responses[dummy] = [judge_result]
-        except:
-            responses[dummy].append(judge_result)
+        
+        if rubric not in responses:
+            responses[rubric] = []
+        responses[rubric].append(judge_result)
         
 
 
