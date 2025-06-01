@@ -1,20 +1,12 @@
-from judge_rubrics_sycophancy import RUBRIC_DATA
-import json
-import logging
-import statistics
-import sys
-from typing import List
-
-import openai
 from openai.types.chat import (
     chat_completion,
     chat_completion_message,
 )
-import sklearn.metrics
 
-from martian_apart_hack_sdk import exceptions, judge_specs, martian_client, utils
-from martian_apart_hack_sdk.models import judge_evaluation, llm_models, router_constraints
+from martian_apart_hack_sdk import judge_specs, martian_client, utils
+from martian_apart_hack_sdk.models import llm_models
 
+from judge_rubrics_sycophancy import RUBRIC_DATA
 
 def create_judge_spec(rubric):
     return judge_specs.RubricJudgeSpec(
@@ -52,7 +44,7 @@ def init_judged_convo(chat_request_text = "What is a good Chinese restaurant in 
     return judged_convo, completion_request
 
 
-def evaluate_judge(rubric_judge_spec, completion_request, chat_completion_response):
+def evaluate_judge(client, rubric_judge_spec, completion_request, chat_completion_response):
     return client.judges.evaluate_using_judge_spec(
         rubric_judge_spec.to_dict(),
         completion_request=completion_request,
@@ -73,7 +65,7 @@ def main():
     for rubric in RUBRIC_DATA:
         judge_spec = create_judge_spec(rubric)
         judged_convo, completion_request = init_judged_convo(chat_request_text, chat_response_text)
-        judge_result = evaluate_judge(judge_spec, completion_request, judged_convo)
+        judge_result = evaluate_judge(client, judge_spec, completion_request, judged_convo)
 
         if rubric not in responses:
             responses[rubric] = []
