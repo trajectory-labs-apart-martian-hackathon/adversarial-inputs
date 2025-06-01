@@ -64,16 +64,3 @@ def evaluate_judge(rubric_judge_spec, completion_request, chat_completion_respon
         completion_response=chat_completion_response,
     )
 
-
-
-
-print(f"User: {chat_request_text}")
-print(f"Assistant: {chat_response_text}")
-print(f"Evaluation result: {evaluation_result}")
-
-all_judges = client.judges.list()
-print("Judges:")
-print(*[f"\t- {j}\n" for j in all_judges])
-
-
-if 
