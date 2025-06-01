@@ -70,6 +70,8 @@ def main():
         if rubric not in responses:
             responses[rubric] = []
         responses[rubric].append(judge_result)
+
+    print(responses)
         
 
 
