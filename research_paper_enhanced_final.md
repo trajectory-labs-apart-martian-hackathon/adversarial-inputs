@@ -28,7 +28,7 @@ Our findings reveal critical vulnerabilities in judge robustness, providing syst
 ## 1. Introduction & Motivation
 
 ### Research Question
-With large language models (LLMs) being given increasing responsibility in workplace and daily life applications, the attack surface for prompt injection attacks grows substantially. Judge models—intermediary systems that evaluate LLM outputs for malicious or problematic content—represent a critical defense mechanism in modern AI orchestration architectures.
+With large language models (LLMs) being given increasing responsibility in workplace and daily life applications, the attack surface for prompt injection attacks grows substantially. Judge models, intermediary systems that evaluate LLM outputs for malicious or problematic content, represent a critical defense mechanism in modern AI orchestration architectures.
 
 ### Challenge Track Focus: Judge Model Development
 Our work directly addresses **Track 1: Judge Model Development** robustness requirements, focusing on systematic vulnerability assessment and the development of comprehensive testing methodologies for judge-based filtering systems.
