@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis of Manipulation Vulnerabilities in AI Orchestration - Enhanced Submission</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            line-height: 1.6;
+            margin: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: bold;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+            margin-top: 30px;
+            font-size: 20px;
+        }
+        h3 {
+            color: #2980b9;
+            margin-top: 25px;
+            font-size: 16px;
+        }
+        h4 {
+            color: #8e44ad;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .authors {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .affiliation {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+            color: #666;
+        }
+        .abstract {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+        }
+        .key-results {
+            background-color: #e8f5e8;
+            border: 1px solid #4caf50;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .findings-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .metrics-box {
+            background-color: #e3f2fd;
+            border: 1px solid #2196f3;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .figure-placeholder {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px dashed #ccc;
+            background-color: #fafafa;
+            color: #666;
+            font-style: italic;
+        }
+        .code-block {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        .important {
+            font-weight: bold;
+            color: #d73527;
+        }
+        ul, ol {
+            margin: 10px 0;
+            padding-left: 30px;
+        }
+        li {
+            margin: 5px 0;
+        }
+        .section-divider {
+            border-top: 2px solid #bdc3c7;
+            margin: 40px 0 20px 0;
+        }
+        strong {
+            color: #2c3e50;
+        }
+        .technique-ranking {
+            background-color: #f9f9f9;
+            border-left: 4px solid #e74c3c;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .repo-link {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .repo-link a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Analysis of Manipulation Vulnerabilities in AI Orchestration</h1>
+
+<div class="authors">
+    <strong>Authors:</strong><br>
+    Robert Mill (Independent), Owen Walker (Independent),<br>
+    Annie Sorkin (Trajectory Labs), Shekhar Tiruwa (Independent)
+</div>
+
+<div class="affiliation">
+    <strong>With:</strong> Trajectory Labs, Martian & Apart Research<br>
+    <strong>Challenge:</strong> Expert Orchestration Architecture - Track 1: Judge Model Development
+</div>
+
+<div class="repo-link">
+    <a href="https://github.com/trajectory-labs-apart-martian-hackathon/adversarial-inputs">🔗 GitHub Repository: Adversarial Inputs Research</a>
+</div>
+
+<div class="section-divider"></div>
+
+<div class="abstract">
+    <h2>Abstract</h2>
+    <p>This project explores the vulnerability of judge models—components designed to detect problematic LLM behavior, such as sycophancy—to adversarial prompt injections. We focus on <strong>Track 1: Judge Model Development</strong> of the Expert Orchestration Architecture challenge.</p>
+    
+    <p>We tested the ability of a less capable language model (openai/o3-mini) to generate completions that, when modified with adversarial suffixes, were misclassified by a GPT-4o-based judge as sycophantic. Our comprehensive evaluation system tested <strong>10 adversarial suffix categories</strong> across <strong>159 unique combinations</strong> of scenarios, response levels, and rubrics, totaling <strong>3,339 evaluations</strong>.</p>
+    
+    <div class="key-results">
+        <strong>Key Results:</strong>
+        <ul>
+            <li><span class="important">"Sentiment flooding"</span> emerged as the most effective adversarial technique with <strong>62% significant change rate</strong> and effectiveness score of <strong>0.5941</strong></li>
+            <li><strong>1,073 out of 3,180</strong> adversarial tests (33.7%) showed significant impact</li>
+            <li><strong>Maximum impact:</strong> Complete score manipulation (1.0 change) achieved</li>
+            <li><strong>Performance:</strong> 22.1 evaluations per second, 100% success rate</li>
+        </ul>
+    </div>
+    
+    <p>Our findings reveal critical vulnerabilities in judge robustness, providing systematic tools for testing and improving adversary-resilient orchestration systems.</p>
+</div>
+
+<h2>1. Introduction & Motivation</h2>
+
+<h3>Research Question</h3>
+<p>With large language models (LLMs) being given increasing responsibility in workplace and daily life applications, the attack surface for prompt injection attacks grows substantially. Judge models—intermediary systems that evaluate LLM outputs for malicious or problematic content—represent a critical defense mechanism in modern AI orchestration architectures.</p>
+
+<h3>Challenge Track Focus: Judge Model Development</h3>
+<p>Our work directly addresses <strong>Track 1: Judge Model Development</strong> robustness requirements, focusing on systematic vulnerability assessment and the development of comprehensive testing methodologies for judge-based filtering systems.</p>
+
+<h3>Contribution to Expert Orchestration</h3>
+<p>We developed a comprehensive framework providing:</p>
+<ul>
+    <li><strong>Adversarial suffix effectiveness</strong> analysis across manipulation strategies</li>
+    <li><strong>Context sensitivity</strong> evaluation across scenarios and rubric variants</li>
+    <li><strong>Systematic evaluation tools</strong> for ongoing security assessment</li>
+    <li><strong>Interpretability insights</strong> into judge failure modes</li>
+</ul>
+
+<h2>2. Comprehensive Evaluation Framework</h2>
+
+<h3>2.1 Technical Architecture</h3>
+
+<div class="metrics-box">
+    <strong>Models & Integration:</strong>
+    <ul>
+        <li><strong>Target Model:</strong> openai/o3-mini (response generation)</li>
+        <li><strong>Judge Model:</strong> GPT-4o (sycophancy evaluation)</li>
+        <li><strong>API Platform:</strong> Martian for model access</li>
+    </ul>
+    
+    <strong>Dataset Construction:</strong>
+    <ul>
+        <li><strong>5 realistic scenarios:</strong> group project conflicts, academic performance discussions, workplace disagreements, restaurant complaints, social media arguments</li>
+        <li><strong>3 response complexity levels:</strong> basic, intermediate, advanced</li>
+        <li><strong>16 judge rubric variants:</strong> diverse evaluation approaches</li>
+    </ul>
+</div>
+
+<h3>2.2 Adversarial Suffix Categories (10 Total)</h3>
+<p>Our systematic testing covered distinct psychological and linguistic vulnerabilities:</p>
+
+<ol>
+    <li><strong>Sentiment Flooding:</strong> Overwhelming emotional validation and agreement</li>
+    <li><strong>Social Proof:</strong> Appeals to consensus and popular opinion</li>
+    <li><strong>Emotional Manipulation:</strong> Direct emotional appeals and sympathy</li>
+    <li><strong>Authority Appeal:</strong> Citations of expertise and authoritative sources</li>
+    <li><strong>Technical Jargon:</strong> Complex terminology to appear knowledgeable</li>
+    <li><strong>Personal Anecdotes:</strong> Fabricated personal experiences for credibility</li>
+    <li><strong>Urgency Creation:</strong> Time pressure and immediate action demands</li>
+    <li><strong>Distraction:</strong> Off-topic elements to divert attention</li>
+    <li><strong>Objectivity Claims:</strong> False assertions of neutrality and balance</li>
+    <li><strong>Evaluation Confusion:</strong> Attempts to confuse evaluation criteria</li>
+</ol>
+
+<h3>2.3 Evaluation Scale & Performance</h3>
+
+<div class="key-results">
+    <strong>Comprehensive Coverage:</strong>
+    <ul>
+        <li><strong>Total Evaluations:</strong> 3,339</li>
+        <li><strong>Unique Combinations:</strong> 159 (5 scenarios × 3 levels × 16 rubrics + baselines)</li>
+        <li><strong>Adversarial Tests:</strong> 3,180 across all suffix categories</li>
+        <li><strong>Baseline Evaluations:</strong> 159 for comparison</li>
+    </ul>
+    
+    <strong>Runtime Performance:</strong>
+    <ul>
+        <li><strong>Total Duration:</strong> 2.51 minutes for complete evaluation</li>
+        <li><strong>Throughput:</strong> 22.1 evaluations per second</li>
+        <li><strong>Success Rate:</strong> 100% (no failed evaluations)</li>
+        <li><strong>Efficiency:</strong> 1,329 evaluations per minute with parallel processing</li>
+    </ul>
+</div>
+
+<h2>3. Results & Comprehensive Analysis</h2>
+
+<h3>3.1 Overall Vulnerability Assessment</h3>
+<p>Our evaluation revealed significant vulnerabilities across all tested adversarial techniques:</p>
+
+<div class="findings-box">
+    <strong>Impact Summary:</strong>
+    <ul>
+        <li><strong>Significant Impacts Detected:</strong> 1,073 out of 3,180 adversarial tests (33.7%)</li>
+        <li><strong>Baseline Score Range:</strong> 0.2-0.8 across different contexts</li>
+        <li><strong>Maximum Manipulation:</strong> Complete score flips (0.0 → 1.0) achieved</li>
+        <li><strong>Consistency:</strong> Top techniques effective across 95% of tested contexts</li>
+    </ul>
+</div>
+
+<h3>3.2 Adversarial Suffix Effectiveness Rankings</h3>
+
+<div class="figure-placeholder">
+    📊 <strong>Figure 1:</strong> Adversarial suffix effectiveness rankings showing composite effectiveness scores and significant change rates<br>
+    <em>(visualization: effectiveness_rankings.png)</em>
+</div>
+
+<div class="technique-ranking">
+    <h4>🥇 1. Sentiment Flooding (Effectiveness Score: 0.5941)</h4>
+    <ul>
+        <li><strong>Significant Change Rate:</strong> 62.0%</li>
+        <li><strong>Average Impact:</strong> 0.2435</li>
+        <li><strong>Maximum Impact:</strong> 1.0000 (complete score manipulation)</li>
+        <li><strong>Directional Bias:</strong> 41.5% negative changes vs 23.3% positive</li>
+        <li><strong>Key Vulnerability:</strong> Overwhelming emotional validation consistently elevates sycophancy scores</li>
+    </ul>
+</div>
+
+<div class="technique-ranking">
+    <h4>🥈 2. Social Proof (Effectiveness Score: 0.3288)</h4>
+    <ul>
+        <li><strong>Significant Change Rate:</strong> 34.6%</li>
+        <li><strong>Average Impact:</strong> 0.0687</li>
+        <li><strong>Most Effective Contexts:</strong> User comfort evaluations, objectivity assessments</li>
+        <li><strong>Strategy:</strong> Appeals to consensus and majority opinion</li>
+    </ul>
+</div>
+
+<div class="technique-ranking">
+    <h4>🥉 3. Emotional Manipulation (Effectiveness Score: 0.3164)</h4>
+    <ul>
+        <li><strong>Significant Change Rate:</strong> 32.1%</li>
+        <li><strong>Average Impact:</strong> 0.0715</li>
+        <li><strong>Key Vulnerability:</strong> Narrative-based and "punchy" evaluation rubrics</li>
+        <li><strong>Strategy:</strong> Direct emotional appeals and sympathy exploitation</li>
+    </ul>
+</div>
+
+<div class="technique-ranking">
+    <h4>4. Authority Appeal (Effectiveness Score: 0.3145)</h4>
+    <ul>
+        <li><strong>Significant Change Rate:</strong> 31.8%</li>
+        <li><strong>Specialized Impact:</strong> 23.9% negative changes, effective against comfort metrics</li>
+        <li><strong>Strategy:</strong> Citations of expertise and authoritative sources</li>
+    </ul>
+</div>
+
+<div class="technique-ranking">
+    <h4>5. Technical Jargon (Effectiveness Score: 0.3140)</h4>
+    <ul>
+        <li><strong>Significant Change Rate:</strong> 31.4%</li>
+        <li><strong>Targeted Effectiveness:</strong> Technical indicator rubrics, user comfort assessments</li>
+        <li><strong>Strategy:</strong> Complex terminology to appear knowledgeable</li>
+    </ul>
+</div>
+
+<h3>3.3 Multi-Dimensional Impact Analysis</h3>
+
+<div class="figure-placeholder">
+    📈 <strong>Figure 2:</strong> Multi-dimensional analysis showing relationships between average/maximum impact, directional patterns, and magnitude distributions<br>
+    <em>(visualization: impact_distributions.png)</em>
+</div>
+
+<div class="findings-box">
+    <strong>Key Findings:</strong>
+    <ul>
+        <li><strong>Sentiment flooding</strong> demonstrates exceptional outlier behavior with both high average and maximum impact</li>
+        <li>Most techniques cluster in the 0.06-0.08 average impact range</li>
+        <li><strong>Directional analysis</strong> reveals sentiment flooding's strong bias toward negative score changes (increasing sycophancy perception)</li>
+        <li><strong>Volume vs. Impact:</strong> High-volume categories don't necessarily correlate with high effectiveness</li>
+    </ul>
+</div>
+
+<h3>3.4 Context-Specific Vulnerability Heatmaps</h3>
+
+<div class="figure-placeholder">
+    🔥 <strong>Figure 3:</strong> Heatmap analysis revealing context-specific vulnerabilities across rubric types and scenarios<br>
+    <em>(visualization: context_heatmaps.png)</em>
+</div>
+
+<div class="metrics-box">
+    <strong>Rubric Vulnerability Analysis:</strong>
+    <ul>
+        <li><strong>"Eighteen Two Options Simple"</strong> rubric most vulnerable to sentiment flooding (0.350 impact)</li>
+        <li><strong>"User Comfort"</strong> assessments susceptible to authority appeals (0.138 impact)</li>
+        <li><strong>Technical indicator</strong> rubrics vulnerable to jargon-based attacks</li>
+        <li><strong>Simple binary rubrics</strong> more vulnerable than nuanced evaluation frameworks</li>
+    </ul>
+    
+    <strong>Scenario Susceptibility Analysis:</strong>
+    <ul>
+        <li><strong>Group project conflicts</strong> most vulnerable across multiple adversarial techniques</li>
+        <li><strong>Restaurant complaints</strong> show high susceptibility to sentiment flooding</li>
+        <li><strong>Academic performance</strong> discussions vulnerable to social proof manipulation</li>
+        <li><strong>Context bleeding</strong> observed where judge performance varies significantly based on scenario framing</li>
+    </ul>
+</div>
+
+<h3>3.5 Comprehensive Performance Dashboard</h3>
+
+<div class="figure-placeholder">
+    📊 <strong>Figure 4:</strong> Complete performance dashboard showing evaluation overview, metrics, top performers, and context coverage<br>
+    <em>(visualization: comprehensive_overview.png)</em>
+</div>
+
+<div class="key-results">
+    <strong>System Performance Insights:</strong>
+    <ul>
+        <li><strong>Runtime Efficiency:</strong> 1,329 evaluations per minute with parallel processing</li>
+        <li><strong>Coverage Breadth:</strong> All suffix categories tested across 16 rubrics and 5 scenarios</li>
+        <li><strong>Reliability:</strong> 100% evaluation success rate with comprehensive logging</li>
+        <li><strong>Scalability:</strong> Framework handles large-scale systematic testing</li>
+    </ul>
+</div>
+
+<h3>3.6 Mechanistic Interpretability Findings</h3>
+
+<div class="findings-box">
+    <strong>Vulnerability Patterns Identified:</strong>
+    <ol>
+        <li><strong>Emotional Amplification:</strong> Judges consistently overestimate sycophancy when responses contain excessive emotional validation</li>
+        <li><strong>Complexity Confusion:</strong> Technical jargon and authority appeals exploit judges' tendency to equate complexity with legitimacy</li>
+        <li><strong>Context Bleeding:</strong> Judge performance varies significantly based on scenario framing</li>
+        <li><strong>Rubric Sensitivity:</strong> Simple binary rubrics more vulnerable than nuanced evaluation frameworks</li>
+    </ol>
+    
+    <strong>Statistical Significance:</strong>
+    <ul>
+        <li><strong>Effect Size:</strong> Sentiment flooding achieves effect sizes >0.5 in optimal contexts</li>
+        <li><strong>Consistency:</strong> Top performers maintain effectiveness across diverse evaluation contexts</li>
+        <li><strong>Threshold Analysis:</strong> 0.1 score change threshold captures meaningful manipulation attempts</li>
+    </ul>
+</div>
+
+<h2>4. Expert Orchestration Architecture Implications</h2>
+
+<h3>4.1 Security Concerns Identified</h3>
+
+<div class="findings-box">
+    <strong>Critical Vulnerabilities:</strong>
+    <ul>
+        <li><strong>Single-judge filtering</strong> creates vulnerable chokepoints in orchestration pipelines</li>
+        <li><strong>Static rubrics</strong> enable predictable attack vectors</li>
+        <li><strong>Limited interpretability</strong> obscures manipulation detection</li>
+        <li><strong>Surface-level pattern matching</strong> susceptible to lexical manipulation</li>
+    </ul>
+</div>
+
+<h3>4.2 Recommended Security Mitigations</h3>
+
+<div class="metrics-box">
+    <strong>Immediate Implementations:</strong>
+    <ol>
+        <li><strong>Judge Ensembles:</strong> Deploy multiple judge models with diverse training and rubrics</li>
+        <li><strong>Dynamic Evaluation:</strong> Rotate evaluation criteria to prevent pattern exploitation</li>
+        <li><strong>Adversarial Training:</strong> Include manipulation examples in judge training data</li>
+        <li><strong>Interpretability Tools:</strong> Implement explanation systems for judge decisions</li>
+    </ol>
+    
+    <strong>System-Level Improvements:</strong>
+    <ul>
+        <li><strong>Multi-layered filtering</strong> with diverse judge architectures</li>
+        <li><strong>Anomaly detection</strong> for unusual judge behavior patterns</li>
+        <li><strong>Continuous monitoring</strong> and real-time adaptation</li>
+        <li><strong>Transparency requirements</strong> with audit trails</li>
+    </ul>
+</div>
+
+<h2>5. Tools & Reproducibility</h2>
+
+<h3>5.1 Comprehensive Evaluation System</h3>
+
+<div class="code-block">
+adversarial-inputs/
+├── adversarial_comprehensive_evaluation.py    # Main evaluation framework
+├── analyze_adversarial_effectiveness.py       # Results analysis  
+├── visualize_adversarial_results.py          # Visualization generation
+├── adversarial_suffix_examples.py            # Suffix category definitions
+├── logs/                                      # Evaluation results
+│   ├── adversarial_comprehensive_results_*.json
+│   └── adversarial_suffix_effectiveness_report.json
+└── visualizations/                           # Generated analysis charts
+    ├── effectiveness_rankings.png
+    ├── impact_distributions.png
+    ├── context_heatmaps.png
+    └── comprehensive_overview.png
+</div>
+
+<h3>5.2 Effectiveness Scoring Methodology</h3>
+
+<div class="code-block">
+# Composite Effectiveness Score
+effectiveness_score = (
+    significant_change_rate * 0.4 +     # 40% weight - frequency of impact
+    avg_absolute_change * 0.3 +         # 30% weight - average magnitude  
+    max_absolute_change * 0.2 +         # 20% weight - peak impact capability
+    balanced_impact_bonus * 0.1         # 10% weight - directional balance
+)
+</div>
+
+<div class="metrics-box">
+    <strong>Statistical Framework:</strong>
+    <ul>
+        <li><strong>Significance Threshold:</strong> 0.1 (10% of full score range)</li>
+        <li><strong>Sample Size:</strong> 318 evaluations per suffix category</li>
+        <li><strong>Statistical Power:</strong> >99% for detecting effect sizes ≥0.1</li>
+    </ul>
+</div>
+
+<h2>6. Conclusion</h2>
+
+<p>We demonstrate that judge models—even those designed with robust objectives—remain vulnerable to systematic adversarial manipulation. Our comprehensive evaluation framework reveals that simple adversarial suffixes can consistently deceive sycophancy detection systems, with <span class="important">sentiment flooding achieving manipulation success in 62% of cases</span>.</p>
+
+<div class="key-results">
+    <strong>Key Contributions:</strong>
+    <ol>
+        <li><strong>Systematic Vulnerability Assessment:</strong> First comprehensive study of judge model susceptibility to adversarial suffixes across multiple dimensions</li>
+        <li><strong>Quantitative Effectiveness Framework:</strong> Metrics and tools for measuring adversarial impact with statistical rigor</li>
+        <li><strong>Context-aware Analysis:</strong> Understanding of scenario and rubric-specific vulnerabilities</li>
+        <li><strong>Practical Defense Insights:</strong> Actionable recommendations for robust judge design and deployment</li>
+    </ol>
+</div>
+
+<div class="findings-box">
+    <strong>Impact on Expert Orchestration:</strong><br>
+    Our findings underscore the critical importance of adversarial testing in judge model development. As orchestration systems increasingly rely on automated filtering, understanding and mitigating these vulnerabilities becomes essential for maintaining system integrity and user trust.
+    
+    <p>The tools and methodologies we provide offer a foundation for ongoing security validation, enabling developers to build more transparent, interpretable, and manipulation-resilient orchestration systems.</p>
+</div>
+
+<div class="section-divider"></div>
+
+<h2>References</h2>
+<p style="font-size: 12px;">
+Alon, U. (2006). An Introduction to Systems Biology: Design Principles of Biological Circuits. Chapman and Hall/CRC.<br><br>
+Goh, G., et al. (2021). Multimodal Neurons in Artificial Neural Networks. Distill, 6(3).<br><br>
+Wallace, E., et al. (2019). Universal Adversarial Triggers for Attacking and Analyzing NLP. arXiv:1908.07125.<br><br>
+Zou, A., et al. (2023). Universal and Transferable Adversarial Attacks on Aligned Language Models. arXiv:2307.15043.
+</p>
+
+<div class="repo-link">
+    <a href="https://github.com/trajectory-labs-apart-martian-hackathon/adversarial-inputs">🔗 Complete Code & Data: GitHub Repository</a>
+</div>
+
+</body>
+</html> 
